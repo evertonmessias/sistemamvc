@@ -1,16 +1,11 @@
-$(function () {
+$(()=>{
 
     $("#quadro").click(function () {
         $(this).fadeOut();
     });
 
     $("#botaoinserir").click(function () {
-        if ($("#nome").val().length < 2 || $("#email").val().length < 2 || $("#tel").val().length < 2) {
-            $("#quadro").fadeIn(); $("#mensagem").html("Digite os campos corretamente !");
-            $("#nome").val('').focus();
-            $("#email").val(''); $("#tel").val('');
-            return false;
-        } else {
+        if (validar($("#nome").val(),$("#tel").val(),$("#email").val())){
             var botaoinserir = $("#botaoinserir").val();
             var nome = $("#nome").val();
             var email = $("#email").val();
@@ -56,7 +51,9 @@ $(function () {
     });
 
 })
+
 // *********************
+
 function alterar(x) {
     idd = 0;
     $("#anome").val("");
@@ -73,12 +70,7 @@ function alterar(x) {
     $("#aemail").val(email);
     idd = x;
     $("#botaoalterar").click(function () {        
-        if ($("#anome").val().length < 2 || $("#aemail").val().length < 2 || $("#atel").val().length < 2) {
-            $("#quadro").fadeIn(); $("#mensagem").html("Digite os campos corretamente !");
-            $("#anome").val('').focus(); $("#aemail").val(''); $("#atel").val('');
-            return false;
-        }
-        else {
+        if (validar($("#anome").val(),$("#atel").val(),$("#aemail").val())){
             var botaoalterar = $("#botaoalterar").val();
             var nome = $("#anome").val();
             var email = $("#aemail").val();
@@ -101,4 +93,20 @@ function apagar(y) {
             $("#quadro").fadeIn(); $("#mensagem").html(mostrar);
         });
     });
+}
+
+function validar(nome,telefone,email){
+    var exp = /^\w+([\.-]\w+)*@\w+\.(\w+\.)*\w{2,3}$/; // ER valida mail
+    if (nome.length < 2) {
+        $("#quadro").fadeIn(); $("#mensagem").html("Digite o Nome corretamente !");
+        return false;
+    }else if(telefone.length < 8 || isNaN(telefone)){
+        $("#quadro").fadeIn(); $("#mensagem").html("Digite o Telefone corretamente !");
+        return false;
+    }else if(!exp.test(email)){
+        $("#quadro").fadeIn(); $("#mensagem").html("Digite o E-Mail corretamente !");
+        return false;
+    }else{
+        return true;
+    }
 }
