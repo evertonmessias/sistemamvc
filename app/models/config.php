@@ -8,6 +8,11 @@ abstract class Sistema
     public static $senha = 'efc2505xx';
     public static $banco = 'teste';
 
+    public static function conexao()
+    {
+        return new \mysqli(self::$servidor, self::$usuario, self::$senha, self::$banco);
+    }
+
     public static function sessao()
     {
         session_start();
@@ -16,15 +21,5 @@ abstract class Sistema
         }else{
             return true;
         }
-    }
-
-    public static function erro()
-    {
-        print "<div id='quadro'><div id='mensagem'></div></div>";
-    }
-
-    public static function conexao()
-    {
-        return new \mysqli(self::$servidor, self::$usuario, self::$senha, self::$banco);
     }
 }

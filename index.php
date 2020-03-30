@@ -1,10 +1,8 @@
 <?php
 
 namespace app;
-
 require "vendor/autoload.php";
 require "./app/public/head.html";
-Sistema::erro();
 $sessao = Sistema::sessao();
 $controller = new Controller;
 if (!$sessao) {   
