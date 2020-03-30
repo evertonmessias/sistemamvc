@@ -44,7 +44,7 @@ abstract class Db
         $sql = "INSERT INTO $tab (id, nome, telefone, email) VALUES (default, '$nome', '$tel', '$email')";
         $resposta = Sistema::conexao()->query($sql);
         if ($resposta) {
-            print "<script>window.location.href='inserir'</script>";
+            print "<h2>Sucesso !!!</h2>";
         } else {
             print "<p><b>Algum ERRO ocorreu !!!</b></p>";
         }

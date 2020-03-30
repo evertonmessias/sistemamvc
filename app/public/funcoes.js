@@ -1,22 +1,23 @@
 $(()=>{
 
-    $("#quadro").click(function () {
+    $("#quadro").click(()=>{
         $(this).fadeOut();
+        window.location.reload();
     });
 
-    $("#botaoinserir").click(function () {
+    $("#botaoinserir").click(()=>{
         if (validar($("#nome").val(),$("#tel").val(),$("#email").val())){
             var botaoinserir = $("#botaoinserir").val();
             var nome = $("#nome").val();
             var email = $("#email").val();
             var tel = $("#tel").val();
             $.post("./app/controllers/acao.php", {botaoinserir:botaoinserir,nome: nome, email: email, tel: tel }, function (mostrar) {
-                $("#quadro").fadeIn(); $("#mensagem").html(mostrar);
+                $("#quadro").fadeIn(); $("#mensagem").css({'background-color':'#28A745'}).html(mostrar);
             });
         }
     });
 
-    $("#botaologin").click(function () {
+    $("#botaologin").click(()=>{
         if ($("#nome").val().length < 2 || $("#senha").val().length < 2) {
             $("#quadro").fadeIn(); $("#mensagem").html("Digite o login corretamente !");
             $("#nome").val('').focus();
@@ -32,7 +33,7 @@ $(()=>{
         }
     });
 
-    $("#botaocontatos").click(function () {
+    $("#botaocontatos").click(()=>{
         if ($("#cnome").val().length < 2 || $("#cemail").val().length < 2 || $("#cmsg").val().length < 2) {
             $("#quadro").fadeIn(); $("#mensagem").html("Digite os campos corretamente !");
             $("#cnome").val('').focus();
@@ -69,7 +70,7 @@ function alterar(x) {
     $("#atel").val(telefone);
     $("#aemail").val(email);
     idd = x;
-    $("#botaoalterar").click(function () {        
+    $("#botaoalterar").click(()=>{        
         if (validar($("#anome").val(),$("#atel").val(),$("#aemail").val())){
             var botaoalterar = $("#botaoalterar").val();
             var nome = $("#anome").val();
@@ -87,7 +88,7 @@ function apagar(y) {
     $('#apagar').css({ 'display': 'block' });
     $('#linha' + y).css({ 'background-color': '#ccc' });
     idd = y;
-    $("#botaoapagar").click(function () { 
+    $("#botaoapagar").click(()=>{ 
         var botaoapagar = $("#botaoapagar").val();       
         $.post("./app/controllers/acao.php", { botaoapagar:botaoapagar,idd: idd }, function (mostrar) {
             $("#quadro").fadeIn(); $("#mensagem").html(mostrar);
