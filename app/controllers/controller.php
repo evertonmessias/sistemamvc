@@ -7,8 +7,23 @@ class Controller
     function home()
     {
         $nome = @$_SESSION['snome'];
+        $adm = @$_SESSION['sadm'];
+        if ($adm) {
+            $nome = $nome . " <a href='user'>(administrador)</a>";
+        }
         $home = file_get_contents("app/views/home.html");
         $saida = str_replace('{{nome}}', $nome, $home);
+        return $saida;
+    }
+    function user()
+    {
+        if ($_SESSION['sadm']) {
+            $consulta = Db::user();
+            $user = file_get_contents("app/views/user.html");
+            $saida = str_replace('{{consultar}}', $consulta, $user);
+        } else {
+            $saida = "Permissão Negada";
+        }
         return $saida;
     }
     function inserir()

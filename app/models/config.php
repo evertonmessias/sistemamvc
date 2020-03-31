@@ -2,6 +2,7 @@
 namespace app;
 abstract class Sistema
 {
+    public static $tabela0 = 'users';
     public static $tabela1 = 'pessoas';
     public static $servidor = 'localhost';
     public static $usuario = 'root';

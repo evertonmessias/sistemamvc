@@ -17,6 +17,24 @@ $(()=>{
         }
     });
 
+    $("#botaoinseriruser").click(()=>{
+        if ($("#name").val().length < 2 || $("#pass").val().length < 2) {
+            $("#quadro").fadeIn(); $("#mensagem").html("Digite os valores corretamente !");
+            $("#nome").val('').focus();
+            $("#senha").val('');
+            return false;
+        } else {
+            var botaoinseriruser = $("#botaoinseriruser").val();
+            var name = $("#name").val();
+            var pass = $("#pass").val();
+            var adm = Number($('#adm').prop('checked'));
+            console.log(adm);           
+            $.post("./app/controllers/acao.php", {botaoinseriruser:botaoinseriruser, name: name, pass: pass, adm, adm }, function (mostrar) {
+                $("#quadro").fadeIn(); $("#mensagem").css({'background-color':'#28A745'}).html(mostrar);
+            });
+        }
+    });
+
     $("#botaologin").click(()=>{
         if ($("#nome").val().length < 2 || $("#senha").val().length < 2) {
             $("#quadro").fadeIn(); $("#mensagem").html("Digite o login corretamente !");
@@ -91,6 +109,21 @@ function apagar(y) {
     $("#botaoapagar").click(()=>{ 
         var botaoapagar = $("#botaoapagar").val();       
         $.post("./app/controllers/acao.php", { botaoapagar:botaoapagar,idd: idd }, function (mostrar) {
+            $("#quadro").fadeIn(); $("#mensagem").html(mostrar);
+        });
+    });
+}
+
+function apagaruser(y) {
+    idd = 0;
+    $('tr.linha').css({ 'background-color': '#fff' });
+    $('#apagar').css({ 'display': 'block' });
+    $('#inseriruser').css({ 'display': 'none' });    
+    $('#linha' + y).css({ 'background-color': '#ccc' });
+    idd = y;
+    $("#botaoapagaruser").click(()=>{ 
+        var botaoapagaruser = $("#botaoapagaruser").val();       
+        $.post("./app/controllers/acao.php", { botaoapagaruser:botaoapagaruser,idd: idd }, function (mostrar) {
             $("#quadro").fadeIn(); $("#mensagem").html(mostrar);
         });
     });

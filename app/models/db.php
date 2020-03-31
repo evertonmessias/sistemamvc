@@ -2,6 +2,31 @@
 namespace app;
 abstract class Db
 {
+    public static function user()
+    {
+        function adm($x){
+            if($x == 1){
+                return "sim";
+            }else{
+                return "não";
+            }
+        }
+        $sql = "SELECT *         
+        from " . Sistema::$tabela0 . "";
+        $lista = Sistema::conexao()->query($sql);
+        $saida = "";
+        $saida .= "<table class='tabela user'><tr class='user'><th class='thida'><h4>ID</h4></th><th><h4>Nome</h4></th><th><h4>Adm ?</h4></th></tr>";
+        foreach ($lista as $vetor) {
+                $saida .= "<tr class='linha' id='linha" 
+                . $vetor['id'] . "' onclick='apagaruser(" . $vetor['id'] . ")'>              
+                <td class='tdida'>" . $vetor['id'] . "</td>
+                <td>" . $vetor['name'] . "</td>
+                <td>" . adm($vetor['adm']) . "</td>
+                </tr>";            
+        }
+        $saida .= "</table>";
+        return $saida;
+    }
     public static function consultar($tipo)
     {
         $sql = "SELECT 
@@ -49,6 +74,20 @@ abstract class Db
             print "<p><b>Algum ERRO ocorreu !!!</b></p>";
         }
     }
+    public static function inseriruser()
+    {
+        $name = $_POST['name'];
+        $pass = md5($_POST['pass']);
+        $adm = $_POST['adm'];        
+        $tab = Sistema::$tabela0;
+        $sql = "INSERT INTO $tab (id, name, pass, adm) VALUES (default, '$name', '$pass', '$adm')";
+        $resposta = Sistema::conexao()->query($sql);
+        if ($resposta) {
+            print "<br><h2>Sucesso !!!</h2><br>";
+        } else {
+            print "<p><b>Algum ERRO ocorreu !!!</b></p>";
+        }
+    }
     public static function alterar()
     {
         $nome = $_POST['nome'];
@@ -72,6 +111,18 @@ abstract class Db
         $result = Sistema::conexao()->query($sql);
         if ($result) {
             print "<script>window.location.href='apagar'</script>";
+        } else {
+            echo "<p><b>ERRO ao apagar !!!</b></p>";
+        }
+    }
+    public static function apagaruser()
+    {
+        $tab = Sistema::$tabela0;
+        $idd = $_POST['idd'];
+        $sql = "DELETE FROM $tab WHERE id = '$idd'";
+        $result = Sistema::conexao()->query($sql);
+        if ($result) {
+            print "<script>window.location.href='user'</script>";
         } else {
             echo "<p><b>ERRO ao apagar !!!</b></p>";
         }
@@ -102,16 +153,21 @@ abstract class Db
         $nome = @$_POST['nome'];
         $senha = @$_POST['senha'];
         Sistema::conexao();
+        $tab = Sistema::$tabela0;
         $criptosenha = md5($senha);
-        $sql = "SELECT users.name,users.pass from users where users.name='$nome' and users.pass='$criptosenha'";
+        $sql = "SELECT * from $tab where users.name='$nome' and users.pass='$criptosenha'";
         $resultado = Sistema::conexao()->query($sql);
         $busca = false;
         foreach ($resultado as $linha) {
-            if ($linha['name'] == $nome && $linha['pass'] == $criptosenha) $busca = true;
+            if ($linha['name'] == $nome && $linha['pass'] == $criptosenha) {
+                $busca = true;
+                $adm = $linha['adm'];
+            }
         }
         if ($busca) {
             session_start();
             $_SESSION['snome'] = $nome;
+            $_SESSION['sadm'] = $adm;
             print "<script>window.location.href='home'</script>";
         } else {
             print "<p><b>ERRO - Usuario ou senha invalidos</b></p>";

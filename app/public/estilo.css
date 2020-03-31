@@ -39,7 +39,10 @@ fieldset input[type='text'],fieldset input[type='password'],fieldset textarea{
 }
 
 .sitename{
-    font-size:30px;font-weight: bold;
+    font-size:40px;font-weight: bold;
+}
+.sitename a{
+    text-decoration: none;
 }
 
 .btn {
@@ -56,6 +59,10 @@ fieldset input[type='text'],fieldset input[type='password'],fieldset textarea{
     text-align: left;
 }
 
+.user{
+    width: 300px;
+}
+
 .tabela td, .tabela th {
     border: 1px solid black;
     width: 200px;
@@ -65,6 +72,12 @@ fieldset input[type='text'],fieldset input[type='password'],fieldset textarea{
     text-align: center;
     color: #fff;
     font-weight: bold;
+}
+tr.user{
+    background-color: #888;
+}
+.user td{
+    text-align: center;
 }
 
 tr.consultar{
