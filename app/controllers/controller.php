@@ -47,8 +47,8 @@ class Controller
         session_destroy();
         print "<script>window.location.href='./'</script>";
     }
-    function pagne()
+    function erro()
     {
-        return file_get_contents("app/views/pagne.html");
+        return file_get_contents("app/views/erro.html");
     }
 }
