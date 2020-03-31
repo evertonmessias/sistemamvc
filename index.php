@@ -3,7 +3,7 @@
 namespace app;
 
 require "vendor/autoload.php";
-require "./app/public/head.html";
+require "./app/public/html/head.html";
 if (count(explode("/", @$_GET['url'])) != 1) {
     header("Location:" . Sistema::path());
 } else {
@@ -12,7 +12,7 @@ if (count(explode("/", @$_GET['url'])) != 1) {
         $controller->login();
     } else {
         $saida = new Routes();
-        $pre_content = file_get_contents("./app/public/nav_content.html");
+        $pre_content = file_get_contents("./app/public/html/nav_content.html");
         $content = str_replace("{{conteudo}}", $saida->route(@$_GET['url']), $pre_content);
         print $content;
     }

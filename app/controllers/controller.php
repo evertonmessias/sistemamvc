@@ -26,9 +26,18 @@ class Controller
         }
         return $saida;
     }
-    function inserir()
+
+    function consultar()
     {
         $consulta = Db::consultar('consultar');
+        $consultar = file_get_contents("app/views/consultar.html");
+        $saida = str_replace('{{consultar}}', $consulta, $consultar);
+        return $saida;
+    }
+    
+    function inserir()
+    {
+        $consulta = Db::consultar('inserir');
         $inserir = file_get_contents("app/views/inserir.html");
         $saida = str_replace('{{consultar}}', $consulta, $inserir);
         return $saida;

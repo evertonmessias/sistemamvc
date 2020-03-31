@@ -74,20 +74,22 @@ fieldset input[type='text'],fieldset input[type='password'],fieldset textarea{
     font-weight: bold;
 }
 tr.user{
-    background-color: #888;
+    background-color: #28A745;
 }
 .user td{
     text-align: center;
 }
-
 tr.consultar{
-    background-color:#28A745
+    background-color:#007BFF;
+}
+tr.inserir{
+    background-color:#28A745;
 }
 tr.alterar{
-    background-color:#FFC107
+    background-color:#FFC107;
 }
 tr.apagar{
-    background-color:#DC3545
+    background-color:#DC3545;
 }
 
 .tabela td.tdida{

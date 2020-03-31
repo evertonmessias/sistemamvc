@@ -39,7 +39,7 @@ abstract class Db
         $saida = "";
         $saida .= "<table class='tabela'><tr class='$tipo'><th class='thida'><h4>ID</h4></th><th><h4>Nome</h4></th><th><h4>Telefone</h4></th><th><h4>E-Mail</h4></th></tr>";
         foreach ($lista as $vetor) {
-            if ($tipo == "consultar") {
+            if ($tipo == "consultar" || $tipo == "inserir") {
                 $saida .= "<tr><td class='tdida'>" . $vetor['id'] . "</td><td>" . $vetor['nome'] . "</td><td>" . $vetor['telefone'] . "</td><td>" . $vetor['email'] . "</td></tr>";
             } elseif ($tipo == "alterar") {
                 $saida .= "<tr class='linha' id='linha" . $vetor['id'] . "' onclick='alterar(" . $vetor['id'] . ")'>
