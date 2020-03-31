@@ -2,12 +2,12 @@
 namespace app;
 abstract class Sistema
 {
-    public static $tabela0 = 'users';
-    public static $tabela1 = 'pessoas';
-    public static $servidor = 'localhost';
-    public static $usuario = 'root';
-    public static $senha = 'efc2505xx';
-    public static $banco = 'teste';
+    public static $tabela0 = DB_TAB0;
+    public static $tabela1 = DB_TAB1;
+    public static $servidor = DB_HOST;
+    public static $usuario = DB_USERNAME;
+    public static $senha = DB_PASSWORD;
+    public static $banco = DB_DATABASE;
 
     public static function conexao()
     {

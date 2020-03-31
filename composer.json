@@ -1,5 +1,5 @@
 {
-    "name": "teste/comp",
+    "name": "evertonmessias/sistemamvc",
     "description": "MVC Composer",
     "require": {
         
@@ -13,6 +13,7 @@
     "autoload": {
         "psr-4":{
             "app\\":"app/"
-        }
-    }
+        },
+        "files":["./app/models/config.php"]
+    }    
 }
