@@ -2,7 +2,7 @@
     "name": "evertonmessias/sistemamvc",
     "description": "Sistema MVC",
     "require": {
-        
+        "phpmailer/phpmailer": "^6.1"
     },
     "authors": [
         {
