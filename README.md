@@ -1,2 +1,2 @@
 # sistemamvc
-Exemplo de Sistema PHP com MVC Composer
+Exemplo de Sistema PHP-CRUD em MVC com Composer, JQuery e URL Amigáveis.
