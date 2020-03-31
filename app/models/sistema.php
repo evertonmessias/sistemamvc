@@ -23,7 +23,7 @@ abstract class Sistema
             return true;
         }
     }
-    public static function path(){
+    public static function domain(){
         return "http://".$_SERVER['SERVER_NAME'].dirname($_SERVER['PHP_SELF'])."/";
     }
 }
