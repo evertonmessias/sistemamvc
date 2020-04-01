@@ -134,13 +134,18 @@ abstract class Db
         $email = $_POST['email'];
         $msg = $_POST['msg'];
         $meuemail = 'everton.messias@gmail.com';
-        $assunto = 'Mensagem do Site';
+        $assunto = 'Mensagem do Sistema VMC';
 
-        $cabecalho = 'From: ' .$email . "\r\n". 
-        'Reply-To: ' . $meuemail. "\r\n" . 
+        $cabecalho = 
+        'MIME-Version: 1.0' . "\r\n" . 
+        'Content-type: text/html; charset=UTF-8;' . "\r\n" .
+        'From: ' .$email . "\r\n". 
+        'Reply-To: ' . $meuemail. "\r\n" .
         'X-Mailer: PHP/' . phpversion();
 
-        $enviar = mail($meuemail, $assunto, $nome." (Tel: ".$tel."); escreveu:\r\n".$msg, $cabecalho);
+        $mensagem = "<h5>Nome: ".$nome."<br>Telef: ".$tel."<br>Mensagem: </h5><p>".$msg."</p>";
+
+        $enviar = mail($meuemail, $assunto, $mensagem, $cabecalho);
         
         print "Nome: " . $nome . "<br>E-mail: " . $email . "<br><br>";
         if ($enviar) {
