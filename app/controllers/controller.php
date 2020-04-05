@@ -4,7 +4,7 @@ namespace app;
 
 class Controller
 {
-    function home()
+    public static function home()
     {
         $nome = @$_SESSION['snome'];
         $adm = @$_SESSION['sadm'];
@@ -15,7 +15,7 @@ class Controller
         $saida = str_replace('{{nome}}', $nome, $home);
         return $saida;
     }
-    function user()
+    public static function user()
     {
         if ($_SESSION['sadm']) {
             $consulta = Db::user();
@@ -27,7 +27,7 @@ class Controller
         return $saida;
     }
 
-    function consultar()
+    public static function consultar()
     {
         $consulta = Db::consultar('consultar');
         $consultar = file_get_contents("app/views/consultar.html");
@@ -35,43 +35,43 @@ class Controller
         return $saida;
     }
     
-    function inserir()
+    public static function inserir()
     {
         $consulta = Db::consultar('inserir');
         $inserir = file_get_contents("app/views/inserir.html");
         $saida = str_replace('{{consultar}}', $consulta, $inserir);
         return $saida;
     }
-    function apagar()
+    public static function apagar()
     {
         $consulta = Db::consultar('apagar');
         $apagar = file_get_contents("app/views/apagar.html");
         $saida = str_replace('{{consultar}}', $consulta, $apagar);
         return $saida;
     }
-    function alterar()
+    public static function alterar()
     {
         $consulta = Db::consultar('alterar');
         $alterar = file_get_contents("app/views/alterar.html");
         $saida = str_replace('{{consultar}}', $consulta, $alterar);
         return $saida;
     }
-    function contatos()
+    public static function contatos()
     {
         return file_get_contents("app/views/contatos.html");
     }
-    function login()
+    public static function login()
     {
         require "app/views/login.html";
     }
-    function sair()
+    public static function sair()
     {
         $_SESSION['snome'] = null;
         unset($_SESSION['snome']);
         session_destroy();
         print "<script>window.location.href='./'</script>";
     }
-    function erro()
+    public static function erro()
     {
         return file_get_contents("app/views/erro.html");
     }

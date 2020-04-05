@@ -4,15 +4,17 @@ namespace app;
 
 class Routes
 {
-    function route($action)
+    public static function route($action)
     {
-        $controller = new Controller;
-        if (!$action) return $controller->home();
-        if ((int) method_exists($controller, $action) == 1) {
-            $saida = $controller->$action();
+        if (!$action) {
+            return Controller::home();
         } else {
-            $saida = $controller->erro();
+            $controller = new Controller;
+            if (method_exists($controller, $action)) {
+                return call_user_func_array(array($controller, $action), []);
+            } else {
+                return Controller::erro();
+            }
         }
-        return $saida;
     }
 }
