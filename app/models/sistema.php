@@ -7,7 +7,7 @@ class Sistema
 
     public static function conexao()
     {
-        return new \PDO(self::$dsn,DB_USERNAME,DB_PASSWORD);
+	    return new \PDO(self::$dsn,DB_USERNAME,DB_PASSWORD);	    
     }
 
     public static function sessao()
