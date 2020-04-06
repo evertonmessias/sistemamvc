@@ -1,6 +1,7 @@
 <?php
 namespace app;
-abstract class Db
+
+class Db
 {
     public static function user()
     {
@@ -12,7 +13,7 @@ abstract class Db
             }
         }
         $sql = "SELECT *         
-        from " . Sistema::$tabela0 . "";
+        from " . DB_TAB0 . "";
         $lista = Sistema::conexao()->query($sql);
         $saida = "";
         $saida .= "<table class='tabela user'><tr class='user'><th class='thida'><h4>ID</h4></th><th><h4>Nome</h4></th><th><h4>Adm ?</h4></th></tr>";
@@ -34,7 +35,7 @@ abstract class Db
         pessoas.nome,
         pessoas.telefone,
         pessoas.email 
-        from " . Sistema::$tabela1 . "";
+        from " . DB_TAB1 . "";
         $lista = Sistema::conexao()->query($sql);
         $saida = "";
         $saida .= "<table class='tabela'><tr class='$tipo'><th class='thida'><h4>ID</h4></th><th><h4>Nome</h4></th><th><h4>Telefone</h4></th><th><h4>E-Mail</h4></th></tr>";
@@ -65,7 +66,7 @@ abstract class Db
         $nome = $_POST['nome'];
         $email = $_POST['email'];
         $tel = $_POST['tel'];
-        $tab = Sistema::$tabela1;
+        $tab = DB_TAB1;
         $sql = "INSERT INTO $tab (id, nome, telefone, email) VALUES (default, '$nome', '$tel', '$email')";
         $resposta = Sistema::conexao()->query($sql);
         if ($resposta) {
@@ -79,7 +80,7 @@ abstract class Db
         $name = $_POST['name'];
         $pass = md5($_POST['pass']);
         $adm = $_POST['adm'];        
-        $tab = Sistema::$tabela0;
+        $tab = DB_TAB0;
         $sql = "INSERT INTO $tab (id, name, pass, adm) VALUES (default, '$name', '$pass', '$adm')";
         $resposta = Sistema::conexao()->query($sql);
         if ($resposta) {
@@ -94,7 +95,7 @@ abstract class Db
         $email = $_POST['email'];
         $tel = $_POST['tel'];
         $idd = $_POST['idd'];
-        $tab = Sistema::$tabela1;
+        $tab = DB_TAB1;
         $sql = "UPDATE $tab SET nome = '$nome', email = '$email' , telefone = '$tel' WHERE id = '$idd'";
         $resposta = Sistema::conexao()->query($sql);
         if ($resposta) {
@@ -105,7 +106,7 @@ abstract class Db
     }
     public static function apagar()
     {
-        $tab = Sistema::$tabela1;
+        $tab = DB_TAB1;
         $idd = $_POST['idd'];
         $sql = "DELETE FROM $tab WHERE id = '$idd'";
         $result = Sistema::conexao()->query($sql);
@@ -117,7 +118,7 @@ abstract class Db
     }
     public static function apagaruser()
     {
-        $tab = Sistema::$tabela0;
+        $tab = DB_TAB0;
         $idd = $_POST['idd'];
         $sql = "DELETE FROM $tab WHERE id = '$idd'";
         $result = Sistema::conexao()->query($sql);
@@ -159,7 +160,7 @@ abstract class Db
         $nome = @$_POST['nome'];
         $senha = @$_POST['senha'];
         Sistema::conexao();
-        $tab = Sistema::$tabela0;
+        $tab = DB_TAB0;
         $criptosenha = md5($senha);
         $sql = "SELECT * from $tab where users.name='$nome' and users.pass='$criptosenha'";
         $resultado = Sistema::conexao()->query($sql);
