@@ -4,7 +4,7 @@ $(() => {
         $(this).fadeOut();
         window.location.reload();
     });
-
+    
     $("#botaoinserir").click(() => {
         if (validar($("#nome").val(), $("#tel").val(), $("#email").val())) {
             var botaoinserir = $("#botaoinserir").val();
@@ -51,8 +51,26 @@ $(() => {
         }
     });
 
+    $("#botaoprereg").click(() => {
+        $("#registrar").css({ 'display': 'block' });
+        $("#entrar").css({ 'display': 'none' });
+    });
+
+    $("#botaoregistrar").click(() => {
+        if (registro($("#rcpf").val(), $("#rnome").val(), $("#rsenha").val())) {
+            var botaoregistrar = $("#botaoregistrar").val();
+            var rnome = $("#rnome").val();
+            var rcpf = $("#rcpf").val();
+            var rsenha = $("#rsenha").val();
+            $.post("./app/controllers/acao.php",{botaoregistrar: botaoregistrar,
+                    rnome: rnome, rcpf: rcpf, rsenha: rsenha},function (mostrar) {
+                    $("#quadro").fadeIn(); $("#mensagem").css({ 'background-color': '#28A745' }).html(mostrar);
+                });
+        }
+    });
+
     $("#botaocontatos").click(() => {
-        if (validar($("#cnome").val(), $("#ctel").val(),$("#cemail").val())) {
+        if (validar($("#cnome").val(), $("#ctel").val(), $("#cemail").val())) {
             var botaocontatos = $("#botaocontatos").val();
             var nome = $("#cnome").val();
             var tel = $("#ctel").val();
@@ -62,10 +80,11 @@ $(() => {
                 { botaocontatos: botaocontatos, nome: nome, tel: tel, email: email, msg: msg },
                 function (mostrar) {
                     $("#quadro").fadeIn(); $("#mensagem").css({ 'background-color': '#28A745' }).html(mostrar); $("#cnome").val('').focus();
-                    $("#ctel").val('');$("#cemail").val(''); $("#cmsg").val('');
+                    $("#ctel").val(''); $("#cemail").val(''); $("#cmsg").val('');
                 });
         }
     });
+
 
 })
 
@@ -141,4 +160,43 @@ function validar(nome, telefone, email) {
     } else {
         return true;
     }
+}
+
+function registro(cpf, nome, senha) {
+    if (!validacpf(cpf)) {
+        $("#quadro").fadeIn(); $("#mensagem").html("Digite um CPF válido !");
+        return false;
+    } else if (nome.length < 2) {
+        $("#quadro").fadeIn(); $("#mensagem").html("Digite o Nome corretamente !");
+        return false;
+    } else if (senha.length < 6) {
+        $("#quadro").fadeIn(); $("#mensagem").html("Digite Senha com mínimo de 6 caracteres !");
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function validacpf(numero) {
+    var exp = /\.|\-/g;
+    var cpf = numero.replace(exp, '').toString();
+    if (cpf.length == 11) {
+        var v = [];
+        //Calcula o primeiro dígito de verificação.
+        v[0] = 1 * cpf[0] + 2 * cpf[1] + 3 * cpf[2];
+        v[0] += 4 * cpf[3] + 5 * cpf[4] + 6 * cpf[5];
+        v[0] += 7 * cpf[6] + 8 * cpf[7] + 9 * cpf[8];
+        v[0] = v[0] % 11;
+        v[0] = v[0] % 10;
+        //Calcula o segundo dígito de verificação.
+        v[1] = 1 * cpf[1] + 2 * cpf[2] + 3 * cpf[3];
+        v[1] += 4 * cpf[4] + 5 * cpf[5] + 6 * cpf[6];
+        v[1] += 7 * cpf[7] + 8 * cpf[8] + 9 * v[0];
+        v[1] = v[1] % 11;
+        v[1] = v[1] % 10;
+        //Retorna Verdadeiro se os dígitos de verificação são os esperados.            
+        if ((v[0] != cpf[9]) || (v[1] != cpf[10])) { return false }
+        else if (cpf[0] == cpf[1] && cpf[1] == cpf[2] && cpf[2] == cpf[3] && cpf[3] == cpf[4] && cpf[4] == cpf[5] && cpf[5] == cpf[6] && cpf[6] == cpf[7] && cpf[7] == cpf[8] && cpf[8] == cpf[9] && cpf[9] == cpf[10]) { return false }
+        else { return true }
+    } else { return false } // 11               
 }

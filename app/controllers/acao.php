@@ -2,6 +2,10 @@
 use app\Db;
 require_once '../../vendor/autoload.php';
 
+if(isset($_POST['botaoregistrar'])){
+    Db::registrar();
+}
+
 if(isset($_POST['botaocontatos'])){
     Db::contatos();
 }

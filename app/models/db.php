@@ -180,4 +180,10 @@ class Db
             print "<p><b>ERRO - Usuario ou senha invalidos</b></p>";
         }
     }
+    public static function registrar(){
+        $cpf = @$_POST['rcpf'];
+        $nome = @$_POST['rnome'];
+        $senha = @$_POST['rsenha'];
+        print "SUCESSO !!!<br>$cpf, $nome, $senha<br>Agora efetue Login";
+    }
 }

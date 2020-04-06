@@ -46,7 +46,7 @@ fieldset input[type='text'],fieldset input[type='password'],fieldset textarea{
 }
 
 .btn {
-    width: 100px;
+    width: 120px;
 }
 
 .tabela {
@@ -103,7 +103,7 @@ tr.apagar{
     background-color: #ccc;
 }
 
-#alterar , #apagar{
+#alterar , #apagar, #registrar{
     display: none;
 }
 

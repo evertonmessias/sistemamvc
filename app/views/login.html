@@ -1,10 +1,28 @@
 <br>
-<fieldset id="login">
-    <legend>LOGIN</legend><br>
     <form method="POST">
-        <input type="text" id="nome" placeholder="Nome"><br>
-        <input type="password" id="senha" placeholder="Senha"><br>
-        <p><br>
+        <div id='entrar'>
+            <fieldset id="login">
+                <legend>LOGIN</legend><br>
+            <input type="text" id="nome" placeholder="Usuário"><br>
+            <input type="password" id="senha" placeholder="Senha"><br>
+            <br>
             <button type="button" id="botaologin" class="btn btn-primary">ENTRAR</button>
+            &ensp;
+            <button type='button' id='botaoprereg' class='btn btn-success'>REGISTRO</button>
+        <br><br>
+        </fieldset>
+        </div>
+        <div id='registrar'>
+            <fieldset id="reg">
+                <legend>REGISTRAR</legend><br>
+            <input type='text' id='rcpf' placeholder='Digite seu CPF ( 000.000.000-00 )'><br>
+            <input type='text' id='rnome' placeholder='Digite um Login'><br>
+            <input type='password' id='rsenha' placeholder='Digite uma Senha'><br>
+            <br>
+            <button type='button' id='botaoregistrar' class='btn btn-success'>REGISTRAR</button>
+            &ensp;
+            <button type="button" onclick="window.location.reload()" class="btn btn-danger">CANCELAR</button>
+            <br><br>
+        </fieldset>
+        </div>
     </form>
-</fieldset>
