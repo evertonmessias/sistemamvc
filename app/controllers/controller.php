@@ -50,10 +50,6 @@ class Controller
         $saida = str_replace('{{consultar}}', $consulta, $alterar);
         return $saida;
     }
-    public static function contatos()
-    {
-        return file_get_contents("app/views/contatos.html");
-    }
     public static function login()
     {
         require "app/views/login.html";

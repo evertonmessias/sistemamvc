@@ -106,9 +106,6 @@ function alterar(x) {
     });
 }
 
-
-
-
 function editaruser(x) {
     idd = 0;
     $('tr.linha').css({ 'background-color': '#fff' });
@@ -133,24 +130,6 @@ function editaruser(x) {
         }
     });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function apagar(y) {
     idd = 0;
