@@ -7,26 +7,13 @@ class Controller
     public static function home()
     {
         $nome = @$_SESSION['snome'];
-        $adm = @$_SESSION['sadm'];
-        if ($adm) {
-            $nome = $nome . " <a href='user'>(administrador)</a>";
-        }
+        $cpf = @$_SESSION['scpf'];
+        $msg = $nome." / ".$cpf;        
         $home = file_get_contents("app/views/home.html");
-        $saida = str_replace('{{nome}}', $nome, $home);
+        $saida = str_replace('{{nome}}', $msg, $home);
         return $saida;
     }
-    public static function user()
-    {
-        if ($_SESSION['sadm']) {
-            $consulta = Db::user();
-            $user = file_get_contents("app/views/user.html");
-            $saida = str_replace('{{consultar}}', $consulta, $user);
-        } else {
-            $saida = "Permissão Negada";
-        }
-        return $saida;
-    }
-
+    
     public static function consultar()
     {
         $consulta = Db::consultar('consultar');
@@ -66,6 +53,7 @@ class Controller
     }
     public static function sair()
     {
+        setcookie('scpf',"",time()-1,"/");
         $_SESSION['snome'] = null;
         unset($_SESSION['snome']);
         session_destroy();

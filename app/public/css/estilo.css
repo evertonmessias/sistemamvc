@@ -65,7 +65,7 @@ fieldset input[type='text'],fieldset input[type='password'],fieldset textarea{
 
 .tabela td, .tabela th {
     border: 1px solid black;
-    width: 200px;
+    width: 200px;padding: 5px;
     vertical-align: center;
 }
 .tabela th{
@@ -109,7 +109,7 @@ tr.apagar{
 
 #mensagem{    
     display: block;position: absolute;margin-left: 40%;margin-top: 10%;
-    min-width: 400px;height: 130x;line-height: 130px;
+    min-width: 400px;height: 130x;line-height: 130px;padding: 20px;
     background-color: red;color: white;font-size: 22px;
     text-align: center;z-index: 200;font-weight: bold;
 }

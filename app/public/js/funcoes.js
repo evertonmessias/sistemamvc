@@ -17,24 +17,6 @@ $(() => {
         }
     });
 
-    $("#botaoinseriruser").click(() => {
-        if ($("#name").val().length < 2 || $("#pass").val().length < 2) {
-            $("#quadro").fadeIn(); $("#mensagem").html("Digite os valores corretamente !");
-            $("#nome").val('').focus();
-            $("#senha").val('');
-            return false;
-        } else {
-            var botaoinseriruser = $("#botaoinseriruser").val();
-            var name = $("#name").val();
-            var pass = $("#pass").val();
-            var adm = Number($('#adm').prop('checked'));
-            console.log(adm);
-            $.post("./app/controllers/acao.php", { botaoinseriruser: botaoinseriruser, name: name, pass: pass, adm, adm }, function (mostrar) {
-                $("#quadro").fadeIn(); $("#mensagem").css({ 'background-color': '#28A745' }).html(mostrar);
-            });
-        }
-    });
-
     $("#botaologin").click(() => {
         if ($("#nome").val().length < 2 || $("#senha").val().length < 2) {
             $("#quadro").fadeIn(); $("#mensagem").html("Digite o login corretamente !");
@@ -60,7 +42,7 @@ $(() => {
         if (registro($("#rcpf").val(), $("#rnome").val(), $("#rsenha").val())) {
             var botaoregistrar = $("#botaoregistrar").val();
             var rnome = $("#rnome").val();
-            var rcpf = $("#rcpf").val();
+            var rcpf = validacpf($("#rcpf").val());
             var rsenha = $("#rsenha").val();
             $.post("./app/controllers/acao.php",{botaoregistrar: botaoregistrar,
                     rnome: rnome, rcpf: rcpf, rsenha: rsenha},function (mostrar) {
@@ -131,21 +113,6 @@ function apagar(y) {
     });
 }
 
-function apagaruser(y) {
-    idd = 0;
-    $('tr.linha').css({ 'background-color': '#fff' });
-    $('#apagar').css({ 'display': 'block' });
-    $('#inseriruser').css({ 'display': 'none' });
-    $('#linha' + y).css({ 'background-color': '#ccc' });
-    idd = y;
-    $("#botaoapagaruser").click(() => {
-        var botaoapagaruser = $("#botaoapagaruser").val();
-        $.post("./app/controllers/acao.php", { botaoapagaruser: botaoapagaruser, idd: idd }, function (mostrar) {
-            $("#quadro").fadeIn(); $("#mensagem").html(mostrar);
-        });
-    });
-}
-
 function validar(nome, telefone, email) {
     var exp = /^\w+([\.-]\w+)*@\w+\.(\w+\.)*\w{2,3}$/; // ER valida mail
     if (nome.length < 2) {
@@ -197,6 +164,6 @@ function validacpf(numero) {
         //Retorna Verdadeiro se os dígitos de verificação são os esperados.            
         if ((v[0] != cpf[9]) || (v[1] != cpf[10])) { return false }
         else if (cpf[0] == cpf[1] && cpf[1] == cpf[2] && cpf[2] == cpf[3] && cpf[3] == cpf[4] && cpf[4] == cpf[5] && cpf[5] == cpf[6] && cpf[6] == cpf[7] && cpf[7] == cpf[8] && cpf[8] == cpf[9] && cpf[9] == cpf[10]) { return false }
-        else { return true }
+        else { return cpf }
     } else { return false } // 11               
 }

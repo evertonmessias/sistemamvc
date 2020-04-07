@@ -3,40 +3,12 @@ namespace app;
 
 class Db
 {
-    public static function user()
-    {
-        function adm($x){
-            if($x == 1){
-                return "sim";
-            }else{
-                return "não";
-            }
-        }
-        $sql = "SELECT *         
-        from " . DB_TAB0 . "";
-        $lista = Sistema::conexao()->query($sql);
-        $saida = "";
-        $saida .= "<table class='tabela user'><tr class='user'><th class='thida'><h4>ID</h4></th><th><h4>Nome</h4></th><th><h4>Adm ?</h4></th></tr>";
-        foreach ($lista as $vetor) {
-                $saida .= "<tr class='linha' id='linha" 
-                . $vetor['id'] . "' onclick='apagaruser(" . $vetor['id'] . ")'>              
-                <td class='tdida'>" . $vetor['id'] . "</td>
-                <td>" . $vetor['name'] . "</td>
-                <td>" . adm($vetor['adm']) . "</td>
-                </tr>";            
-        }
-        $saida .= "</table>";
-        return $saida;
-    }
     public static function consultar($tipo)
     {
-        $sql = "SELECT 
-        pessoas.id,
-        pessoas.nome,
-        pessoas.telefone,
-        pessoas.email 
-        from " . DB_TAB1 . "";
-        $lista = Sistema::conexao()->query($sql);
+        $tab = $_COOKIE['scpf'];
+        $sql = "SELECT * 
+        from `$tab`";
+        $lista = Sistema::conexao()->query($sql);        
         $saida = "";
         $saida .= "<table class='tabela'><tr class='$tipo'><th class='thida'><h4>ID</h4></th><th><h4>Nome</h4></th><th><h4>Telefone</h4></th><th><h4>E-Mail</h4></th></tr>";
         foreach ($lista as $vetor) {
@@ -58,45 +30,33 @@ class Db
                 </tr>";
             }
         }
-        $saida .= "</table>";
+        $saida .= "</table>";    
         return $saida;
     }
+
     public static function inserir()
-    {
+    {        
         $nome = $_POST['nome'];
         $email = $_POST['email'];
         $tel = $_POST['tel'];
-        $tab = DB_TAB1;
-        $sql = "INSERT INTO $tab (id, nome, telefone, email) VALUES (default, '$nome', '$tel', '$email')";
+        $tab = $_COOKIE['scpf'];
+        $sql = "INSERT INTO `$tab` (id,nome,telefone,email) VALUES (default, '$nome', '$tel', '$email')";
         $resposta = Sistema::conexao()->query($sql);
         if ($resposta) {
             print "<br><h2>Sucesso !!!</h2><br>";
         } else {
-            print "<p><b>Algum ERRO ocorreu !!!</b></p>";
+            print "<p><b>Algum ERRO ocorreu $tab !!!</b></p>";
         }
     }
-    public static function inseriruser()
-    {
-        $name = $_POST['name'];
-        $pass = md5($_POST['pass']);
-        $adm = $_POST['adm'];        
-        $tab = DB_TAB0;
-        $sql = "INSERT INTO $tab (id, name, pass, adm) VALUES (default, '$name', '$pass', '$adm')";
-        $resposta = Sistema::conexao()->query($sql);
-        if ($resposta) {
-            print "<br><h2>Sucesso !!!</h2><br>";
-        } else {
-            print "<p><b>Algum ERRO ocorreu !!!</b></p>";
-        }
-    }
+
     public static function alterar()
     {
         $nome = $_POST['nome'];
         $email = $_POST['email'];
         $tel = $_POST['tel'];
         $idd = $_POST['idd'];
-        $tab = DB_TAB1;
-        $sql = "UPDATE $tab SET nome = '$nome', email = '$email' , telefone = '$tel' WHERE id = '$idd'";
+        $tab = $_COOKIE['scpf'];
+        $sql = "UPDATE `$tab` SET nome = '$nome', email = '$email' , telefone = '$tel' WHERE id = '$idd'";
         $resposta = Sistema::conexao()->query($sql);
         if ($resposta) {
             print "<script>window.location.href='alterar'</script>";
@@ -106,9 +66,9 @@ class Db
     }
     public static function apagar()
     {
-        $tab = DB_TAB1;
+        $tab = $_COOKIE['scpf'];
         $idd = $_POST['idd'];
-        $sql = "DELETE FROM $tab WHERE id = '$idd'";
+        $sql = "DELETE FROM `$tab` WHERE id = '$idd'";
         $result = Sistema::conexao()->query($sql);
         if ($result) {
             print "<script>window.location.href='apagar'</script>";
@@ -116,16 +76,51 @@ class Db
             echo "<p><b>ERRO ao apagar !!!</b></p>";
         }
     }
-    public static function apagaruser()
+
+    public static function login()
     {
+        $nome = $_POST['nome'];
+        $senha = $_POST['senha'];
+        Sistema::conexao();
         $tab = DB_TAB0;
-        $idd = $_POST['idd'];
-        $sql = "DELETE FROM $tab WHERE id = '$idd'";
-        $result = Sistema::conexao()->query($sql);
-        if ($result) {
-            print "<script>window.location.href='user'</script>";
+        $criptosenha = md5($senha);
+        $sql = "SELECT * from $tab where users.name='$nome' and users.pass='$criptosenha'";
+        $resultado = Sistema::conexao()->query($sql);
+        $busca = false;
+        foreach ($resultado as $linha) {
+            if ($linha['name'] == $nome && $linha['pass'] == $criptosenha) {
+                $busca = true;
+                $cpf = $linha['id'];
+            }
+        }
+        if ($busca) {
+            session_start();
+            $_SESSION['snome'] = $nome;
+            $_SESSION['scpf'] = $cpf;
+            setcookie('scpf',$cpf,time()+3600,"/");
+            print "<script>window.location.href='home'</script>";
         } else {
-            echo "<p><b>ERRO ao apagar !!!</b></p>";
+            print "<p><b>ERRO - Usuario ou senha invalidos</b></p>";
+        }
+    }
+    public static function registrar(){
+        $cpf = @$_POST['rcpf'];
+        $nome = @$_POST['rnome'];
+        $senha = @$_POST['rsenha'];
+        Sistema::conexao();
+        $tab = DB_TAB0;
+        $criptosenha = md5($senha);
+
+        $sql = "INSERT INTO $tab (id, name, pass) VALUES ('$cpf', '$nome', '$criptosenha')";
+        $resposta = Sistema::conexao()->query($sql);
+
+        $sql2 = "CREATE TABLE `$cpf` (`id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,`nome` varchar(32) NOT NULL,`telefone` varchar(32) NOT NULL,`email` varchar(32) NOT NULL)DEFAULT CHARSET=utf8;";
+        $resposta2 = Sistema::conexao()->query($sql2);
+
+        if ($resposta && $resposta2) {
+            print "Sucesso !!!<br>$cpf, $nome, $senha<br>Agora efetue Login";
+        } else {
+            print "<p><b>CPF já Cadastrado !!!</b></p>";
         }
     }
     public static function contatos()
@@ -154,36 +149,5 @@ class Db
         } else {
             print "Erro - Mensagem não Enviada !";
         }
-    }
-    public static function login()
-    {
-        $nome = @$_POST['nome'];
-        $senha = @$_POST['senha'];
-        Sistema::conexao();
-        $tab = DB_TAB0;
-        $criptosenha = md5($senha);
-        $sql = "SELECT * from $tab where users.name='$nome' and users.pass='$criptosenha'";
-        $resultado = Sistema::conexao()->query($sql);
-        $busca = false;
-        foreach ($resultado as $linha) {
-            if ($linha['name'] == $nome && $linha['pass'] == $criptosenha) {
-                $busca = true;
-                $adm = $linha['adm'];
-            }
-        }
-        if ($busca) {
-            session_start();
-            $_SESSION['snome'] = $nome;
-            $_SESSION['sadm'] = $adm;
-            print "<script>window.location.href='home'</script>";
-        } else {
-            print "<p><b>ERRO - Usuario ou senha invalidos</b></p>";
-        }
-    }
-    public static function registrar(){
-        $cpf = @$_POST['rcpf'];
-        $nome = @$_POST['rnome'];
-        $senha = @$_POST['rsenha'];
-        print "SUCESSO !!!<br>$cpf, $nome, $senha<br>Agora efetue Login";
     }
 }
