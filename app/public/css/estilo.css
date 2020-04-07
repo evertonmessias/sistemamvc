@@ -23,6 +23,10 @@ fieldset {
     text-align: center;
 }
 
+#form1, #form2, #form3{
+    width: 600px;
+}
+
 fieldset input[type='text'],fieldset input[type='password'],fieldset textarea{
     width: 400px;
     display: block;
@@ -103,7 +107,7 @@ tr.apagar{
     background-color: #ccc;
 }
 
-#alterar , #apagar, #registrar{
+#alterar , #apagar, #registrar, #contatar, #editaruser{
     display: none;
 }
 

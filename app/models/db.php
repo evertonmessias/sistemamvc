@@ -3,6 +3,38 @@ namespace app;
 
 class Db
 {
+    public static function user()
+    {
+        $sql = "SELECT *         
+        from " . DB_TAB0 . " WHERE `id` = ".$_COOKIE['scpf']."";
+        $lista = Sistema::conexao()->query($sql);
+        $saida = "";
+        $saida .= "<table class='tabela user'><tr class='user'><th class='thida'><h4>ID</h4></th><th><h4>Nome</h4></th></tr>";
+        foreach ($lista as $vetor) {              
+                $saida .= "<tr class='linha' id='linha" . $vetor['id'] . "' onclick='editaruser(" . $vetor['id'] . ")'>
+                <td class='tid" . $vetor['id'] . "'>" . $vetor['id'] . "</td>
+                <td class='tname" . $vetor['id'] . "'>" . $vetor['name'] . "</td>                              
+                </tr>";
+        }
+        $saida .= "</table>";
+        return $saida;
+    }
+
+    public static function editaruser()
+    {
+        $idd = $_POST['idd'];
+        $name = $_POST['name'];
+        $pass = md5($_POST['pass']);        
+        $tab = DB_TAB0;
+        $sql = "UPDATE `$tab` SET name = '$name', pass = '$pass' WHERE id = '$idd'";
+        $resposta = Sistema::conexao()->query($sql);
+        if ($resposta) {
+            print "Sucesso !!!<br>(Necessita Sair)";
+        } else {
+            print "<p><b>Algum ERRO ocorreu !!!</b></p>";
+        }
+    }
+
     public static function consultar($tipo)
     {
         $tab = $_COOKIE['scpf'];
@@ -96,7 +128,6 @@ class Db
         if ($busca) {
             session_start();
             $_SESSION['snome'] = $nome;
-            $_SESSION['scpf'] = $cpf;
             setcookie('scpf',$cpf,time()+3600,"/");
             print "<script>window.location.href='home'</script>";
         } else {

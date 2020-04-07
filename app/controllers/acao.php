@@ -6,6 +6,10 @@ if(isset($_POST['botaoregistrar'])){
     Db::registrar();
 }
 
+if(isset($_POST['botaoeditaruser'])){
+    Db::editaruser();
+}
+
 if(isset($_POST['botaocontatos'])){
     Db::contatos();
 }

@@ -6,14 +6,21 @@ class Controller
 {
     public static function home()
     {
-        $nome = @$_SESSION['snome'];
-        $cpf = @$_SESSION['scpf'];
-        $msg = $nome." / ".$cpf;        
+        $nome = $_SESSION['snome'];
+        $nome = $nome . " <a href='user'>(editar)</a>";
         $home = file_get_contents("app/views/home.html");
-        $saida = str_replace('{{nome}}', $msg, $home);
+        $saida = str_replace('{{nome}}', $nome, $home);
         return $saida;
     }
-    
+
+    public static function user()
+    {
+        $consulta = Db::user();
+        $user = file_get_contents("app/views/user.html");
+        $saida = str_replace('{{consultar}}', $consulta, $user);
+        return $saida;
+    }
+
     public static function consultar()
     {
         $consulta = Db::consultar('consultar');
@@ -21,7 +28,7 @@ class Controller
         $saida = str_replace('{{consultar}}', $consulta, $consultar);
         return $saida;
     }
-    
+
     public static function inserir()
     {
         $consulta = Db::consultar('inserir');
@@ -53,7 +60,7 @@ class Controller
     }
     public static function sair()
     {
-        setcookie('scpf',"",time()-1,"/");
+        setcookie('scpf', "", time() - 1, "/");
         $_SESSION['snome'] = null;
         unset($_SESSION['snome']);
         session_destroy();

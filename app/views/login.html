@@ -1,28 +1,43 @@
 <br>
-    <form method="POST">
-        <div id='entrar'>
-            <fieldset id="login">
-                <legend>LOGIN</legend><br>
+<form method="POST">
+    <div id='entrar'>
+        <fieldset id="form1">
+            <legend>LOGIN</legend><br>
             <input type="text" id="nome" placeholder="Usuário"><br>
-            <input type="password" id="senha" placeholder="Senha"><br>
-            <br>
+            <input type="password" id="senha" placeholder="Senha">
+            <br><br>
             <button type="button" id="botaologin" class="btn btn-primary">ENTRAR</button>
             &ensp;
             <button type='button' id='botaoprereg' class='btn btn-success'>REGISTRO</button>
-        <br><br>
+            &ensp;
+            <button type="button" id='botaoprecont' class="btn btn-secondary">CONTATOS</button>
+            <br><br>
         </fieldset>
-        </div>
-        <div id='registrar'>
-            <fieldset id="reg">
-                <legend>REGISTRAR</legend><br>
-            <input type='text' id='rcpf' placeholder='Digite seu CPF ( 000.000.000-00 )'><br>
+    </div>
+    <div id='registrar'>
+        <fieldset id="form2">
+            <legend>REGISTRAR</legend><br>
+            <input type='text' id='rcpf' placeholder='Digite seu CPF'><br>
             <input type='text' id='rnome' placeholder='Digite um Login'><br>
-            <input type='password' id='rsenha' placeholder='Digite uma Senha'><br>
-            <br>
+            <input type='password' id='rsenha' placeholder='Digite uma Senha'>
+            <br><br>
             <button type='button' id='botaoregistrar' class='btn btn-success'>REGISTRAR</button>
             &ensp;
             <button type="button" onclick="window.location.reload()" class="btn btn-danger">CANCELAR</button>
             <br><br>
         </fieldset>
-        </div>
-    </form>
+    </div>
+    <div id="contatar">
+        <fieldset id="form3">
+            <legend>CONTATE O ADMINISTRADOR:</legend><br>
+            <input type='text' id='cnome' placeholder='Seu Nome' required><br>
+            <input type='text' id='ctel' placeholder='Seu Telefone' required><br>
+            <input type='text' id='cemail' placeholder='Seu E-Mail' required><br>
+            <textarea id='cmsg' cols='45' rows='8' placeholder=' Mensagem' required></textarea>
+            <br><br><button type='button' id='botaocontatos' class='btn btn-secondary'>ENVIAR</button>
+            &ensp;
+            <button type="button" onclick="window.location.reload()" class="btn btn-danger">CANCELAR</button>
+            <br><br>
+        </fieldset>
+    </div>
+</form>

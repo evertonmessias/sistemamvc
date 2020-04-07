@@ -15,7 +15,7 @@ $(() => {
                 $("#quadro").fadeIn(); $("#mensagem").css({ 'background-color': '#28A745' }).html(mostrar);
             });
         }
-    });
+    });    
 
     $("#botaologin").click(() => {
         if ($("#nome").val().length < 2 || $("#senha").val().length < 2) {
@@ -36,7 +36,13 @@ $(() => {
     $("#botaoprereg").click(() => {
         $("#registrar").css({ 'display': 'block' });
         $("#entrar").css({ 'display': 'none' });
+        $("#contatar").css({ 'display': 'none' });
     });
+    $("#botaoprecont").click(() => {
+        $("#registrar").css({ 'display': 'none' });
+        $("#entrar").css({ 'display': 'none' });
+        $("#contatar").css({ 'display': 'block' });
+    });    
 
     $("#botaoregistrar").click(() => {
         if (registro($("#rcpf").val(), $("#rnome").val(), $("#rsenha").val())) {
@@ -99,6 +105,53 @@ function alterar(x) {
         }
     });
 }
+
+
+
+
+function editaruser(x) {
+    idd = 0;
+    $('tr.linha').css({ 'background-color': '#fff' });
+    $('#editaruser').css({ 'display': 'block' });
+    $('#linha' + x).css({ 'background-color': '#ccc' });    
+    var nome = $(".tname" + x).text();    
+    $("#name").val(nome);    
+    idd = x;
+    $("#botaoeditaruser").click(() => {
+        if ($("#name").val().length < 2 || $("#pass").val().length < 2) {
+            $("#quadro").fadeIn(); $("#mensagem").html("Digite os valores corretamente !");
+            $("#nome").val('').focus();
+            $("#senha").val('');
+            return false;
+        } else {
+            var botaoeditaruser = $("#botaoeditaruser").val();
+            var name = $("#name").val();
+            var pass = $("#pass").val();
+            $.post("./app/controllers/acao.php", { botaoeditaruser: botaoeditaruser, name: name, pass: pass, idd:idd}, function (mostrar) {
+                $("#quadro").fadeIn(); $("#mensagem").css({ 'background-color': '#28A745' }).html(mostrar);
+            });
+        }
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function apagar(y) {
     idd = 0;
     $('tr.linha').css({ 'background-color': '#fff' });
