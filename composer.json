@@ -2,6 +2,7 @@
     "name": "evertonmessias/sistemamvc",
     "description": "Sistema MVC",
     "require": {
+        "dompdf/dompdf": "^0.8.5"
     },
     "authors": [
         {

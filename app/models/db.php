@@ -1,17 +1,20 @@
 <?php
+
 namespace app;
+
+use Dompdf\Dompdf;
 
 class Db
 {
     public static function user()
     {
         $sql = "SELECT *         
-        from " . DB_TAB0 . " WHERE `id` = ".$_COOKIE['scpf']."";
+        from " . DB_TAB0 . " WHERE `id` = " . $_COOKIE['scpf'] . "";
         $lista = Sistema::conexao()->query($sql);
         $saida = "";
         $saida .= "<table class='tabela user'><tr class='user'><th class='thida'><h4>ID</h4></th><th><h4>Nome</h4></th></tr>";
-        foreach ($lista as $vetor) {              
-                $saida .= "<tr class='linha' id='linha" . $vetor['id'] . "' onclick='editaruser(" . $vetor['id'] . ")'>
+        foreach ($lista as $vetor) {
+            $saida .= "<tr class='linha' id='linha" . $vetor['id'] . "' onclick='editaruser(" . $vetor['id'] . ")'>
                 <td class='tid" . $vetor['id'] . "'>" . $vetor['id'] . "</td>
                 <td class='tname" . $vetor['id'] . "'>" . $vetor['name'] . "</td>                              
                 </tr>";
@@ -24,7 +27,7 @@ class Db
     {
         $idd = $_POST['idd'];
         $name = $_POST['name'];
-        $pass = md5($_POST['pass']);        
+        $pass = md5($_POST['pass']);
         $tab = DB_TAB0;
         $sql = "UPDATE `$tab` SET name = '$name', pass = '$pass' WHERE id = '$idd'";
         $resposta = Sistema::conexao()->query($sql);
@@ -40,7 +43,7 @@ class Db
         $tab = $_COOKIE['scpf'];
         $sql = "SELECT * 
         from `$tab`";
-        $lista = Sistema::conexao()->query($sql);        
+        $lista = Sistema::conexao()->query($sql);
         $saida = "";
         $saida .= "<table class='tabela'><tr class='$tipo'><th class='thida'><h4>ID</h4></th><th><h4>Nome</h4></th><th><h4>Telefone</h4></th><th><h4>E-Mail</h4></th></tr>";
         foreach ($lista as $vetor) {
@@ -62,12 +65,22 @@ class Db
                 </tr>";
             }
         }
-        $saida .= "</table>";    
+        $saida .= "</table>";
         return $saida;
     }
 
+    public static function imprimir()
+    {
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml(Db::consultar('consultar'));
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+        $dompdf->stream();        
+    }
+
+
     public static function inserir()
-    {        
+    {
         $nome = $_POST['nome'];
         $email = $_POST['email'];
         $tel = $_POST['tel'];
@@ -128,13 +141,14 @@ class Db
         if ($busca) {
             session_start();
             $_SESSION['snome'] = $nome;
-            setcookie('scpf',$cpf,time()+3600,"/");
+            setcookie('scpf', $cpf, time() + 3600, "/");
             print "<script>window.location.href='home'</script>";
         } else {
             print "<p><b>ERRO - Usuario ou senha invalidos</b></p>";
         }
     }
-    public static function registrar(){
+    public static function registrar()
+    {
         $cpf = @$_POST['rcpf'];
         $nome = @$_POST['rnome'];
         $senha = @$_POST['rsenha'];
@@ -163,17 +177,17 @@ class Db
         $meuemail = 'everton.messias@gmail.com';
         $assunto = 'Mensagem do Sistema VMC';
 
-        $cabecalho = 
-        'MIME-Version: 1.0' . "\r\n" . 
-        'Content-type: text/html; charset=UTF-8;' . "\r\n" .
-        'From: ' .$email . "\r\n". 
-        'Reply-To: ' . $meuemail. "\r\n" .
-        'X-Mailer: PHP/' . phpversion();
+        $cabecalho =
+            'MIME-Version: 1.0' . "\r\n" .
+            'Content-type: text/html; charset=UTF-8;' . "\r\n" .
+            'From: ' . $email . "\r\n" .
+            'Reply-To: ' . $meuemail . "\r\n" .
+            'X-Mailer: PHP/' . phpversion();
 
-        $mensagem = "<h5>Nome: ".$nome."<br>Telef: ".$tel."<br>Mensagem: </h5><p>".$msg."</p>";
+        $mensagem = "<h5>Nome: " . $nome . "<br>Telef: " . $tel . "<br>Mensagem: </h5><p>" . $msg . "</p>";
 
         $enviar = mail($meuemail, $assunto, $mensagem, $cabecalho);
-        
+
         print "Nome: " . $nome . "<br>E-mail: " . $email . "<br><br>";
         if ($enviar) {
             print "Mensagem Enviada com Sucesso !";

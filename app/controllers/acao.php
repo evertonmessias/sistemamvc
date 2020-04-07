@@ -28,3 +28,7 @@ if(isset($_POST['botaologin'])){
     Db::login();
 }
 
+if(isset($_POST['botaoimprimir'])){
+    Db::imprimir();
+}
+

@@ -3,7 +3,8 @@
 namespace app;
 
 require "vendor/autoload.php";
-require "app/public/html/head.html";
+$head = file_get_contents("app/public/html/head.html");
+print $head;
 
 if (count(explode("/", @$_GET['url'])) != 1) {
     header("Location:" . Sistema::domain());
