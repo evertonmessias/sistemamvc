@@ -59,7 +59,7 @@ fieldset input[type='text'],fieldset input[type='password'],fieldset textarea{
 }
 
 .titulo{
-    font-size: 50px;font-weight: bold;
+    font-size: 30px;font-weight: bold;
 }
 .subtitulo{
     font-size: 15px;font-weight: bold;
@@ -133,6 +133,7 @@ tr.apagar{
     width: 25px;
 }
 .tabela tr.linha{
+    color:#007BFF;
     cursor: pointer;
 }
 .tabela tr.linha:hover{
