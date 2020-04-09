@@ -9,7 +9,7 @@ body{
     position: relative;
     margin: 0 auto;
     width: 1000px;
-    min-height: 600px;
+    min-height: 550px;
     background-color: #fff;
     text-align: center;
 }
@@ -51,6 +51,15 @@ fieldset input[type='text'],fieldset input[type='password'],fieldset textarea{
 
 .btn {
     width: 120px;
+}
+
+.btngoogle{
+    width: 70px;
+}
+
+.avatar{
+    width: 200px;
+    border: 1px solid black;
 }
 
 .tabela {
@@ -107,7 +116,7 @@ tr.apagar{
     background-color: #ccc;
 }
 
-#alterar , #apagar, #registrar, #contatar, #editaruser{
+#alterar , #apagar, #registrar, #contatar, #editaruser, #maisbotoes{
     display: none;
 }
 

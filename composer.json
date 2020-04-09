@@ -2,7 +2,8 @@
     "name": "evertonmessias/sistemamvc",
     "description": "Sistema MVC",
     "require": {
-        "dompdf/dompdf": "^0.8.5"
+        "dompdf/dompdf": "^0.8.5",
+        "league/oauth2-google": "^3.0"
     },
     "authors": [
         {

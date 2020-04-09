@@ -13,10 +13,10 @@ class Sistema
     public static function sessao()
     {
         session_start();
-        if (!isset($_SESSION['snome'])) {
-            return false;
-        }else{
+        if (isset($_SESSION['snome']) || isset($_SESSION['gnome'])) {
             return true;
+        }else{
+            return false;
         }
     }
     public static function domain(){

@@ -6,19 +6,12 @@ class Controller
 {
     public static function home()
     {
-        $nome = $_SESSION['snome'];
-        $nome = $nome . " <a href='user'>(editar)</a>";
-        $home = file_get_contents("app/views/home.html");
-        $saida = str_replace('{{nome}}', $nome, $home);
-        return $saida;
+        require "app/views/home.php";        
     }
 
     public static function user()
-    {
-        $consulta = Db::user();
-        $user = file_get_contents("app/views/user.html");
-        $saida = str_replace('{{consultar}}', $consulta, $user);
-        return $saida;
+    {        
+        require "app/views/user.php"; 
     }
 
     public static function consultar()
@@ -52,7 +45,7 @@ class Controller
     }
     public static function login()
     {
-        require "app/views/login.html";
+        require "app/views/login.php";
     }
     public static function sair()
     {

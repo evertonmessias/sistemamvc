@@ -12,9 +12,8 @@ if (count(explode("/", @$_GET['url'])) != 1) {
     if (!Sistema::sessao()) {
         Controller::login();
     } else {
-        require "app/public/html/nav.html";
-        $pre_content = file_get_contents("app/public/html/content.html");
-        $content = str_replace("{{conteudo}}", Routes::route(@$_GET['url']), $pre_content);
-        print $content;
+        require "app/public/html/nav_content.html";
+        print Routes::route(@$_GET['url']);
+        require "app/public/html/footer.html";
     }
 }

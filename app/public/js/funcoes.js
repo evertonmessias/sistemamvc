@@ -18,19 +18,21 @@ $(() => {
     });    
 
     $("#botaologin").click(() => {
-        if ($("#nome").val().length < 2 || $("#senha").val().length < 2) {
-            $("#quadro").fadeIn(); $("#mensagem").html("Digite o login corretamente !");
-            $("#nome").val('').focus();
-            $("#senha").val('');
-            return false;
-        } else {
+        if (validaruser($("#email").val(),$("#senha").val())){
             var botaologin = $("#botaologin").val();
-            var nome = $("#nome").val();
+            var email = $("#email").val();
             var senha = $("#senha").val();
-            $.post("./app/controllers/acao.php", { botaologin: botaologin, nome: nome, senha: senha }, function (mostrar) {
+            $.post("./app/controllers/acao.php", { botaologin: botaologin, email: email, senha: senha }, function (mostrar) {
                 $("#quadro").fadeIn(); $("#mensagem").html(mostrar);
             });
         }
+    });
+
+    $("#botaogoogle").click(() => {
+        var botaogoogle = $('#botaogoogle').val();
+        $.post("./app/controllers/acao.php", { botaogoogle: botaogoogle }, function (mostrar) {
+            $("#quadro").fadeIn(); $("#mensagem").css({ 'background-color': '#28A745' }).html(mostrar);
+        });
     });
 
     $("#botaoprereg").click(() => {
@@ -153,6 +155,19 @@ function validar(nome, telefone, email) {
         return false;
     } else if (!exp.test(email)) {
         $("#quadro").fadeIn(); $("#mensagem").html("Digite o E-Mail corretamente !");
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function validaruser(email, senha) {
+    var exp = /^\w+([\.-]\w+)*@\w+\.(\w+\.)*\w{2,3}$/; // ER valida mail
+    if (!exp.test(email)) {
+        $("#quadro").fadeIn(); $("#mensagem").html("Digite o E-Mail corretamente !");
+        return false;
+    }if (senha.length < 2) {
+        $("#quadro").fadeIn(); $("#mensagem").html("Digite a Senha corretamente !");
         return false;
     } else {
         return true;

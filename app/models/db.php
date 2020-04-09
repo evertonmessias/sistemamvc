@@ -8,15 +8,15 @@ class Db
 {
     public static function user()
     {
-        $sql = "SELECT *         
-        from " . DB_TAB0 . " WHERE `id` = " . $_COOKIE['scpf'] . "";
+        $tab = DB_TAB0;
+        $sql = "SELECT * FROM ".$tab." WHERE `email` = '".$_COOKIE['snome']."'";
         $lista = Sistema::conexao()->query($sql);
         $saida = "";
         $saida .= "<table class='tabela user'><tr class='user'><th class='thida'><h4>ID</h4></th><th><h4>Nome</h4></th></tr>";
         foreach ($lista as $vetor) {
             $saida .= "<tr class='linha' id='linha" . $vetor['id'] . "' onclick='editaruser(" . $vetor['id'] . ")'>
                 <td class='tid" . $vetor['id'] . "'>" . $vetor['id'] . "</td>
-                <td class='tname" . $vetor['id'] . "'>" . $vetor['name'] . "</td>                              
+                <td class='tname" . $vetor['id'] . "'>" . $vetor['email'] . "</td>                              
                 </tr>";
         }
         $saida .= "</table>";
@@ -40,12 +40,12 @@ class Db
 
     public static function consultar($tipo)
     {
-        $tab = $_COOKIE['scpf'];
+        $tab = $_COOKIE['snome'];
         $sql = "SELECT * 
         from `$tab`";
         $lista = Sistema::conexao()->query($sql);
         $saida = "";
-        $saida .= "<table class='tabela'><tr class='$tipo'><th class='thida'><h4>ID</h4></th><th><h4>Nome</h4></th><th><h4>Telefone</h4></th><th><h4>E-Mail</h4></th></tr>";
+        $saida .= "<fieldset><table class='tabela'><tr class='$tipo'><th class='thida'><h4>ID</h4></th><th><h4>Nome</h4></th><th><h4>Telefone</h4></th><th><h4>E-Mail</h4></th></tr>";
         foreach ($lista as $vetor) {
             if ($tipo == "consultar" || $tipo == "inserir") {
                 $saida .= "<tr><td class='tdida'>" . $vetor['id'] . "</td><td>" . $vetor['nome'] . "</td><td>" . $vetor['telefone'] . "</td><td>" . $vetor['email'] . "</td></tr>";
@@ -65,7 +65,7 @@ class Db
                 </tr>";
             }
         }
-        $saida .= "</table>";
+        $saida .= "</table><br><br></fieldset>";
         return $saida;
     }
 
@@ -75,7 +75,7 @@ class Db
         $dompdf->loadHtml(Db::consultar('consultar'));
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
-        $dompdf->stream();        
+        $dompdf->stream();
     }
 
 
@@ -84,7 +84,7 @@ class Db
         $nome = $_POST['nome'];
         $email = $_POST['email'];
         $tel = $_POST['tel'];
-        $tab = $_COOKIE['scpf'];
+        $tab = $_COOKIE['snome'];
         $sql = "INSERT INTO `$tab` (id,nome,telefone,email) VALUES (default, '$nome', '$tel', '$email')";
         $resposta = Sistema::conexao()->query($sql);
         if ($resposta) {
@@ -100,7 +100,7 @@ class Db
         $email = $_POST['email'];
         $tel = $_POST['tel'];
         $idd = $_POST['idd'];
-        $tab = $_COOKIE['scpf'];
+        $tab = $_COOKIE['snome'];
         $sql = "UPDATE `$tab` SET nome = '$nome', email = '$email' , telefone = '$tel' WHERE id = '$idd'";
         $resposta = Sistema::conexao()->query($sql);
         if ($resposta) {
@@ -111,7 +111,7 @@ class Db
     }
     public static function apagar()
     {
-        $tab = $_COOKIE['scpf'];
+        $tab = $_COOKIE['snome'];
         $idd = $_POST['idd'];
         $sql = "DELETE FROM `$tab` WHERE id = '$idd'";
         $result = Sistema::conexao()->query($sql);
@@ -124,24 +124,22 @@ class Db
 
     public static function login()
     {
-        $nome = $_POST['nome'];
+        $email = $_POST['email'];
         $senha = $_POST['senha'];
         Sistema::conexao();
         $tab = DB_TAB0;
         $criptosenha = md5($senha);
-        $sql = "SELECT * from $tab where users.name='$nome' and users.pass='$criptosenha'";
+        $sql = "SELECT * from $tab where users.email='$email' and users.pass='$criptosenha'";
         $resultado = Sistema::conexao()->query($sql);
         $busca = false;
         foreach ($resultado as $linha) {
-            if ($linha['name'] == $nome && $linha['pass'] == $criptosenha) {
-                $busca = true;
-                $cpf = $linha['id'];
+            if ($linha['email'] == $email && $linha['pass'] == $criptosenha) {
+                $busca = true;                
             }
         }
         if ($busca) {
             session_start();
-            $_SESSION['snome'] = $nome;
-            setcookie('scpf', $cpf, time() + 3600, "/");
+            $_SESSION['snome'] = $email;           
             print "<script>window.location.href='home'</script>";
         } else {
             print "<p><b>ERRO - Usuario ou senha invalidos</b></p>";
