@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 07-Abr-2020 às 19:59
+-- Tempo de geração: 10-Abr-2020 às 01:34
 -- Versão do servidor: 10.4.11-MariaDB
 -- versão do PHP: 7.3.2
 
@@ -25,10 +25,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `19549896870`
+-- Estrutura da tabela `everton.messias@gmail.com`
 --
 
-CREATE TABLE `19549896870` (
+CREATE TABLE `everton.messias@gmail.com` (
   `id` int(11) NOT NULL,
   `nome` varchar(32) NOT NULL,
   `telefone` varchar(32) NOT NULL,
@@ -36,33 +36,11 @@ CREATE TABLE `19549896870` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Extraindo dados da tabela `19549896870`
+-- Extraindo dados da tabela `everton.messias@gmail.com`
 --
 
-INSERT INTO `19549896870` (`id`, `nome`, `telefone`, `email`) VALUES
-(1, 'Clelia', '991260304', 'mae@mae.com'),
-(2, 'Dhora', '995233262', 'dhora@amor.com'),
-(3, 'Erika', '923452345', 'kika@filha.com');
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `25748256835`
---
-
-CREATE TABLE `25748256835` (
-  `id` int(11) NOT NULL,
-  `nome` varchar(32) NOT NULL,
-  `telefone` varchar(32) NOT NULL,
-  `email` varchar(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Extraindo dados da tabela `25748256835`
---
-
-INSERT INTO `25748256835` (`id`, `nome`, `telefone`, `email`) VALUES
-(1, 'everton', '995233262', 'everton.messias@gmail.com');
+INSERT INTO `everton.messias@gmail.com` (`id`, `nome`, `telefone`, `email`) VALUES
+(1, 'Clelia', '995233262', 'everton.messias@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -71,8 +49,8 @@ INSERT INTO `25748256835` (`id`, `nome`, `telefone`, `email`) VALUES
 --
 
 CREATE TABLE `users` (
-  `id` varchar(11) NOT NULL,
-  `name` varchar(32) NOT NULL,
+  `id` int(11) NOT NULL,
+  `email` varchar(32) NOT NULL,
   `pass` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -80,24 +58,17 @@ CREATE TABLE `users` (
 -- Extraindo dados da tabela `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `pass`) VALUES
-('19549896870', 'everton', 'e61db210dd1672863fe9f1c6d3faea38'),
-('25748256835', 'dhora', 'aec1de9e0e936ea10342b5c0118c5242');
+INSERT INTO `users` (`id`, `email`, `pass`) VALUES
+(12, 'everton.messias@gmail.com', 'e61db210dd1672863fe9f1c6d3faea38');
 
 --
 -- Índices para tabelas despejadas
 --
 
 --
--- Índices para tabela `19549896870`
+-- Índices para tabela `everton.messias@gmail.com`
 --
-ALTER TABLE `19549896870`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices para tabela `25748256835`
---
-ALTER TABLE `25748256835`
+ALTER TABLE `everton.messias@gmail.com`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -111,16 +82,16 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT de tabela `19549896870`
+-- AUTO_INCREMENT de tabela `everton.messias@gmail.com`
 --
-ALTER TABLE `19549896870`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `everton.messias@gmail.com`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de tabela `25748256835`
+-- AUTO_INCREMENT de tabela `users`
 --
-ALTER TABLE `25748256835`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
