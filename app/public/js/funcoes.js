@@ -47,13 +47,12 @@ $(() => {
     });    
 
     $("#botaoregistrar").click(() => {
-        if (registro($("#rcpf").val(), $("#rnome").val(), $("#rsenha").val())) {
+        if (validaruser($("#remail").val(), $("#rsenha").val())) {
             var botaoregistrar = $("#botaoregistrar").val();
-            var rnome = $("#rnome").val();
-            var rcpf = validacpf($("#rcpf").val());
+            var remail = $("#remail").val();
             var rsenha = $("#rsenha").val();
             $.post("./app/controllers/acao.php",{botaoregistrar: botaoregistrar,
-                    rnome: rnome, rcpf: rcpf, rsenha: rsenha},function (mostrar) {
+                    remail: remail, rsenha: rsenha},function (mostrar) {
                     $("#quadro").fadeIn(); $("#mensagem").css({ 'background-color': '#28A745' }).html(mostrar);
                 });
         }
@@ -112,19 +111,15 @@ function editaruser(x) {
     $('#editaruser').css({ 'display': 'block' });
     $('#linha' + x).css({ 'background-color': '#ccc' });    
     var nome = $(".tname" + x).text();    
-    $("#name").val(nome);    
+    $("#email").val(nome);    
     idd = x;
     $("#botaoeditaruser").click(() => {
-        if ($("#name").val().length < 2 || $("#pass").val().length < 2) {
-            $("#quadro").fadeIn(); $("#mensagem").html("Digite os valores corretamente !");
-            $("#nome").val('').focus();
-            $("#senha").val('');
-            return false;
-        } else {
+        if (validaruser($("#email").val(), $("#pass").val())){
             var botaoeditaruser = $("#botaoeditaruser").val();
-            var name = $("#name").val();
+            var email = $("#email").val();
             var pass = $("#pass").val();
-            $.post("./app/controllers/acao.php", { botaoeditaruser: botaoeditaruser, name: name, pass: pass, idd:idd}, function (mostrar) {
+            $.post("./app/controllers/acao.php", { botaoeditaruser: botaoeditaruser, 
+                email: email, pass: pass, idd:idd}, function (mostrar) {
                 $("#quadro").fadeIn(); $("#mensagem").css({ 'background-color': '#28A745' }).html(mostrar);
             });
         }

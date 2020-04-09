@@ -1,6 +1,7 @@
 <?php
 require_once "vendor/autoload.php";
 use League\OAuth2\Client\Provider\Google;
+use app\Db;
 
     /*
     Auth Google
@@ -14,6 +15,8 @@ use League\OAuth2\Client\Provider\Google;
     if($code){
         $token = $google->getAccessToken("authorization_code",["code"=>$code]);
         $_SESSION['gnome'] = serialize($google->getResourceOwner($token));
+        $gemail = unserialize($_SESSION['gnome']);
+        if (!Db::user($gemail->getEmail())) {Db::registrar($gemail->getEmail(), $gemail->getEmail());}
         header("Location:".GOOGLE['redirectUri']);
     }   
 ?>
@@ -43,7 +46,7 @@ use League\OAuth2\Client\Provider\Google;
     <div id='registrar'>
         <fieldset id="form2">
             <legend>REGISTRAR</legend><br>
-            <input type='text' id='rmail' placeholder='Digite seu E-Mail'><br>
+            <input type='text' id='remail' placeholder='Digite seu E-Mail'><br>
             <input type='password' id='rsenha' placeholder='Digite uma Senha'>
             <br><br>
             <button type='button' id='botaoregistrar' class='btn btn-success'>REGISTRAR</button>

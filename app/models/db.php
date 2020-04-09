@@ -6,21 +6,25 @@ use Dompdf\Dompdf;
 
 class Db
 {
-    public static function user()
+    public static function user($email)
     {
         $tab = DB_TAB0;
-        $sql = "SELECT * FROM ".$tab." WHERE `email` = '".$_COOKIE['snome']."'";
+        $idd="";
+        $sql = "SELECT * FROM " . $tab . " WHERE `email` = '$email'";
         $lista = Sistema::conexao()->query($sql);
         $saida = "";
         $saida .= "<table class='tabela user'><tr class='user'><th class='thida'><h4>ID</h4></th><th><h4>Nome</h4></th></tr>";
-        foreach ($lista as $vetor) {
+        foreach ($lista as $vetor) { 
+            $idd = $vetor['id'];           
             $saida .= "<tr class='linha' id='linha" . $vetor['id'] . "' onclick='editaruser(" . $vetor['id'] . ")'>
                 <td class='tid" . $vetor['id'] . "'>" . $vetor['id'] . "</td>
                 <td class='tname" . $vetor['id'] . "'>" . $vetor['email'] . "</td>                              
                 </tr>";
         }
         $saida .= "</table>";
-        return $saida;
+
+        if($idd=="")return false;
+        else{return $saida;}
     }
 
     public static function editaruser()
@@ -134,37 +138,34 @@ class Db
         $busca = false;
         foreach ($resultado as $linha) {
             if ($linha['email'] == $email && $linha['pass'] == $criptosenha) {
-                $busca = true;                
+                $busca = true;
             }
         }
         if ($busca) {
             session_start();
-            $_SESSION['snome'] = $email;           
+            $_SESSION['snome'] = $email;
             print "<script>window.location.href='home'</script>";
         } else {
             print "<p><b>ERRO - Usuario ou senha invalidos</b></p>";
         }
     }
-    public static function registrar()
+    public static function registrar($email,$senha)
     {
-        $cpf = @$_POST['rcpf'];
-        $nome = @$_POST['rnome'];
-        $senha = @$_POST['rsenha'];
-        Sistema::conexao();
-        $tab = DB_TAB0;
-        $criptosenha = md5($senha);
+            $tab = DB_TAB0;
+            $criptosenha = md5($senha);
 
-        $sql = "INSERT INTO $tab (id, name, pass) VALUES ('$cpf', '$nome', '$criptosenha')";
-        $resposta = Sistema::conexao()->query($sql);
+            $sql = "INSERT INTO $tab (id, email, pass) VALUES (default, '$email', '$criptosenha')";
+            $resposta = Sistema::conexao()->query($sql);
 
-        $sql2 = "CREATE TABLE `$cpf` (`id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,`nome` varchar(32) NOT NULL,`telefone` varchar(32) NOT NULL,`email` varchar(32) NOT NULL)DEFAULT CHARSET=utf8;";
-        $resposta2 = Sistema::conexao()->query($sql2);
+            $sql2 = "CREATE TABLE `$email` (`id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,`nome` varchar(32) NOT NULL,`telefone` varchar(32) NOT NULL,`email` varchar(32) NOT NULL)DEFAULT CHARSET=utf8;";
+            $resposta2 = Sistema::conexao()->query($sql2);
 
-        if ($resposta && $resposta2) {
-            print "Sucesso !!!<br>$cpf, $nome, $senha<br>Agora efetue Login";
-        } else {
-            print "<p><b>CPF já Cadastrado !!!</b></p>";
-        }
+            if ($resposta && $resposta2) {
+                print "Sucesso !!!<br>$email, $senha<br>Agora efetue Login";
+            } else {
+                print "<p><b>CPF já Cadastrado !!!</b></p>";
+            }
+        
     }
     public static function contatos()
     {

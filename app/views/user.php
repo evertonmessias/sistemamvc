@@ -4,12 +4,12 @@
     if (isset($_SESSION['gnome'])) {
         echo "<h3>Permissão Negada</h3>";
     } else {
-        echo Db::user();
+        echo Db::user($_COOKIE['snome']);
     ?>
         <br><legend>EDITAR USUARIO</legend>
         <div id='editaruser'>
             <form method='post'><br>
-                <input type='text' id='name' placeholder='Usuario'><br>
+                <input type='text' id='email' placeholder='E-Mail'><br>
                 <input type='password' id='pass' placeholder='Nova Senha'><br>
                 <button type='button' id='botaoeditaruser' class='btn btn-success'>EDITAR</button>
                 &ensp;
