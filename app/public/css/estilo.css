@@ -31,12 +31,31 @@ fieldset {
     background-color:#ccc;
 }
 
+#menulogin{
+    font-size: 12px;
+    left: 440px;
+    top:20px;
+    display: block;
+    position: absolute;
+}
+#menulogin a{
+    padding: 2px;
+    text-decoration: none;
+}
+#menulogin a:hover{    
+    background-color:#aaa;
+}
+
 fieldset input[type='text'],fieldset input[type='password'],fieldset textarea{
     width: 400px;
     display: block;
     position: relative;
     margin: 0 auto;
     border-radius: 3px;
+}
+
+.campoemail{
+    background-color: #ddd;
 }
 
 .titulo{
@@ -120,7 +139,7 @@ tr.apagar{
     background-color: #ccc;
 }
 
-#alterar , #apagar, #registrar, #contatar, #editaruser, #maisbotoes{
+#alterar , #apagar, #registrar, #contatar, #editaruser{
     display: none;
 }
 

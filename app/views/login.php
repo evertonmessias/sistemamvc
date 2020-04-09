@@ -1,30 +1,39 @@
 <?php
 require_once "vendor/autoload.php";
+
 use League\OAuth2\Client\Provider\Google;
 use app\Db;
 
-    /*
+/*
     Auth Google
     */
-    $google = new Google(GOOGLE);
-    $authUrl = $google->getAuthorizationUrl();
 
-    $error = filter_input(INPUT_GET,"error",FILTER_SANITIZE_STRING);
-    $code = filter_input(INPUT_GET,"code",FILTER_SANITIZE_STRING);   
+$google = new Google(GOOGLE);
+$authUrl = $google->getAuthorizationUrl();
 
-    if($code){
-        $token = $google->getAccessToken("authorization_code",["code"=>$code]);
-        $_SESSION['gnome'] = serialize($google->getResourceOwner($token));
-        $gemail = unserialize($_SESSION['gnome']);
-        if (!Db::user($gemail->getEmail())) {Db::registrar($gemail->getEmail(), $gemail->getEmail());}
-        header("Location:".GOOGLE['redirectUri']);
-    }   
+$error = filter_input(INPUT_GET, "error", FILTER_SANITIZE_STRING);
+$code = filter_input(INPUT_GET, "code", FILTER_SANITIZE_STRING);
+
+if ($code) {
+    $token = $google->getAccessToken("authorization_code", ["code" => $code]);
+    $_SESSION['gnome'] = serialize($google->getResourceOwner($token));
+    $gemail = unserialize($_SESSION['gnome']);
+    if (!Db::user($gemail->getEmail())) {
+        Db::registrar($gemail->getEmail(), $gemail->getEmail());
+    }
+    header("Location:" . GOOGLE['redirectUri']);
+}
 ?>
 <br>
 <form method="POST">
     <div id='entrar'>
         <fieldset id="form1">
             <legend>LOGIN</legend><br>
+            <div id='menulogin'>
+            <a href="#" id='botaoprereg'>REGISTRAR</a>
+            &nbsp;
+            <a href="#" id='botaoprecont'>CONTATOS</a>
+            </div>
             <input type="text" id="email" placeholder="E-Mail"><br>
             <input type="password" id="senha" placeholder="Senha">
             <br><br>
@@ -32,15 +41,11 @@ use app\Db;
             &ensp;
             <?php
             echo "<a href='{$authUrl}'><button type='button' title='Entrar com uma conta Google' class='btn btn-dark'><img class='btngoogle' src='app/public/img/logo_google.png'></button></a>";
-            if($error){
+            if ($error) {
                 echo "<h3>VC PRECISA AUTORIZAR</h3>";
             }
-            ?>
-            <br><br>
-            <button type='button' title='Criar um Registro' id='botaoprereg' class='btn btn-success'>REGISTRAR</button>
-            &ensp;
-            <button type="button" title='Enviar uma Mensagem' id='botaoprecont' class="btn btn-secondary">CONTATOS</button>
-            <br><br>
+            ?>            
+            <br><br><br>
         </fieldset>
     </div>
     <div id='registrar'>

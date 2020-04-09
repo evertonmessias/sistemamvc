@@ -27,14 +27,7 @@ $(() => {
             });
         }
     });
-
-    $("#botaogoogle").click(() => {
-        var botaogoogle = $('#botaogoogle').val();
-        $.post("./app/controllers/acao.php", { botaogoogle: botaogoogle }, function (mostrar) {
-            $("#quadro").fadeIn(); $("#mensagem").css({ 'background-color': '#28A745' }).html(mostrar);
-        });
-    });
-
+    
     $("#botaoprereg").click(() => {
         $("#registrar").css({ 'display': 'block' });
         $("#entrar").css({ 'display': 'none' });
@@ -115,7 +108,7 @@ function editaruser(x) {
     idd = x;
     $("#botaoeditaruser").click(() => {
         if (validaruser($("#email").val(), $("#pass").val())){
-            var botaoeditaruser = $("#botaoeditaruser").val();
+            var botaoeditaruser = $("#botaoeditaruser").val();            
             var email = $("#email").val();
             var pass = $("#pass").val();
             $.post("./app/controllers/acao.php", { botaoeditaruser: botaoeditaruser, 
