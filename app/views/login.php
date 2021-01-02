@@ -4,9 +4,7 @@ require_once "vendor/autoload.php";
 use League\OAuth2\Client\Provider\Google;
 use app\Db;
 
-/*
-    Auth Google
-    */
+// Auth Google
 
 $google = new Google(GOOGLE);
 $authUrl = $google->getAuthorizationUrl();
@@ -34,6 +32,7 @@ if ($code) {
             &nbsp;
             <a href="#" id='botaoprecont'>CONTATOS</a>
             </div>
+            <br><br>
             <input type="text" id="email" placeholder="E-Mail"><br>
             <input type="password" id="senha" placeholder="Senha">
             <br><br>
